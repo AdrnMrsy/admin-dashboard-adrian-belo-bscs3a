@@ -1,45 +1,106 @@
+body {
+  background-color: #121212;
+  color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #121212;
 }
 
 .form-container {
-  padding: 4rem 2rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
+  padding: 3rem 2rem;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-.form-container > div {
-  margin-bottom: 12px;
+  width: 400px;
 }
 
 .form-group {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 16px;
 }
 
-.form-group label {
-  width: 70px;
-  margin-right: 8px;
-  text-align: left;
+label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #c0c0c0;
 }
+
+input {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #4caf50;
+}
+
 .errors {
-  color: red;
+  color: #ff5252;
   font-size: 12px;
 }
-.submit-container {
-  margin-top: 12px;
-  text-align: center;
-}
-.register-container {
-  text-align: center;
-}
+
 .show-password {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
+  color: #4caf50;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.show-password:hover {
+  text-decoration: underline;
+}
+
+.submit-container button {
+  padding: 10px 20px;
+  width: 400px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.submit-container button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.submit-container button:hover:not(:disabled) {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.register-container {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.register-container a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+.register-container a:hover {
+  text-decoration: underline;
 }

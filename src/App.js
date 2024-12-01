@@ -9,10 +9,28 @@ import Movie from './pages/Main/Movie/Movie';
 import Lists from './pages/Main/Movie/Lists/Lists';
 import Form from './pages/Main/Movie/Form/Form';
 import Register from './pages/Public/Register/Register';
+import MainClient from "./clientPages/Main/MainClient";
+import Home from "./clientPages/Main/Movie/Home/Home";
+import View from "./clientPages/Main/Movie/View/View";
+import MovieContextProvider from "./context/MovieContext";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
+    element: <MainClient />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/view/:movieId?",
+        element: <View />,
+      },
+    ],
+  },
+  {
+    path: '/login',
     element: <Login />,
   },
   {
@@ -48,8 +66,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className='App'>
-      <RouterProvider router={router} />
+    <div className="App">
+      <MovieContextProvider>
+        <RouterProvider router={router} />
+      </MovieContextProvider>
     </div>
   );
 }

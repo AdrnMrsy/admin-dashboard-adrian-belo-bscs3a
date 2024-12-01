@@ -69,73 +69,62 @@ function Login() {
   }, [userInputDebounce]);
 
   return (
-    <div className='Login'>
-      <div className='main-container'>
-        <h3>Login</h3>
+    <div className="Login">
+      <div className="main-container">
+        <h1 style={{ color: "#4caf50", marginBottom: "20px" }}>CineScope</h1>
         <form>
-          <div className='form-container'>
-            <div>
-              <div className='form-group'>
-                <label>E-mail:</label>
-                <input
-                  type='text'
-                  name='email'
-                  ref={emailRef}
-                  onChange={(e) => handleOnChange(e, 'email')}
-                />
-              </div>
-              {debounceState && isFieldsDirty && email == '' && (
-                <span className='errors'>This field is required</span>
+          <div className="form-container">
+            <div className="form-group">
+              <label htmlFor="email">E-mail:</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                ref={emailRef}
+                placeholder="Enter your email"
+                onChange={(e) => handleOnChange(e, 'email')}
+              />
+              {debounceState && isFieldsDirty && email === '' && (
+                <span className="errors">This field is required</span>
               )}
             </div>
-            <div>
-              <div className='form-group'>
-                <label>Password:</label>
-                <input
-                  type={isShowPassword ? 'text' : 'password'}
-                  name='password'
-                  ref={passwordRef}
-                  onChange={(e) => handleOnChange(e, 'password')}
-                />
-              </div>
-              {debounceState && isFieldsDirty && password == '' && (
-                <span className='errors'>This field is required</span>
+            <div className="form-group">
+              <label htmlFor="password">Password:</label>
+              <input
+                type={isShowPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                ref={passwordRef}
+                placeholder="Enter your password"
+                onChange={(e) => handleOnChange(e, 'password')}
+              />
+              {debounceState && isFieldsDirty && password === '' && (
+                <span className="errors">This field is required</span>
               )}
             </div>
-            <div className='show-password' onClick={handleShowPassword}>
+            <div className="show-password" onClick={handleShowPassword}>
               {isShowPassword ? 'Hide' : 'Show'} Password
             </div>
-
-            <div className='submit-container'>
+            <div className="submit-container">
               <button
-                type='button'
+                type="button"
                 disabled={status === 'loading'}
                 onClick={() => {
-                  if (status === 'loading') {
-                    return;
-                  }
+                  if (status === 'loading') return;
                   if (email && password) {
-                    handleLogin({
-                      type: 'login',
-                      user: { email, password },
-                    });
+                    handleLogin();
                   } else {
                     setIsFieldsDirty(true);
-                    if (email == '') {
-                      emailRef.current.focus();
-                    }
-
-                    if (password == '') {
-                      passwordRef.current.focus();
-                    }
+                    if (email === '') emailRef.current.focus();
+                    if (password === '') passwordRef.current.focus();
                   }
                 }}
               >
                 {status === 'idle' ? 'Login' : 'Loading'}
               </button>
             </div>
-            <div className='register-container'>
-              <a href='/register'>
+            <div className="register-container">
+              <a href="/register">
                 <small>Register</small>
               </a>
             </div>
@@ -144,6 +133,7 @@ function Login() {
       </div>
     </div>
   );
+  
 }
 
 export default Login;
