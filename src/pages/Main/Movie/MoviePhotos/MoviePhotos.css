@@ -1,0 +1,20 @@
+.photos-container {
+    margin-top: 20px;
+  }
+  
+  .photos-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .photo-item {
+    margin: 20px;
+  }
+  
+  .photo-image {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  

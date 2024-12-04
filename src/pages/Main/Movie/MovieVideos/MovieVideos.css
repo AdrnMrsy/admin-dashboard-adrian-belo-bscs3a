@@ -1,0 +1,20 @@
+.videos-container {
+    margin-top: 50px;
+  }
+  
+  .videos-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+  }
+  
+  .video-item {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .video-item h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  

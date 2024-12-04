@@ -67,26 +67,27 @@ const Lists = () => {
             </tr>
           </thead>
           <tbody>
-            {lists.map((movie) => (
-              <tr>
-                <td>{movie.id}</td>
-                <td>{movie.title}</td>
-                <td>
-                  <button
-                    type='button'
-                    onClick={() => {
-                      navigate('/main/movies/form/' + movie.id);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button type='button' onClick={() => handleDelete(movie.id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          {lists.map((movie) => (
+            <tr key={movie.id}>
+              <td>{movie.id}</td>
+              <td>{movie.title}</td>
+              <td>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/main/movies/form/' + movie.id);
+                  }}
+                >
+                  Edit
+                </button>
+                <button type="button" onClick={() => handleDelete(movie.id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+
         </table>
       </div>
     </div>

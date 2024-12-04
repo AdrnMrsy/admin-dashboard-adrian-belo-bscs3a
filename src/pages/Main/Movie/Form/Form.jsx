@@ -3,6 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Form.css';
 import { useNavigate } from 'react-router-dom';
+import MovieVideos from '../MovieVideos/MovieVideos';
+import MoviePhotos from '../MoviePhotos/MoviePhotos';
+import MovieCast from '../MovieCast/MovieCast';
 
 const Form = () => {
   const [query, setQuery] = useState('');
@@ -22,7 +25,7 @@ const Form = () => {
         headers: {
           Accept: 'application/json',
           Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTdiNmUyNGJkNWRkNjhiNmE1ZWFjZjgyNWY3NGY5ZCIsIm5iZiI6MTcyOTI5NzI5Ny4wNzMzNTEsInN1YiI6IjY2MzhlZGM0MmZhZjRkMDEzMGM2NzM3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZIX4EF2yAKl6NwhcmhZucxSQi1rJDZiGG80tDd6_9XI',
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDdmYTM5OWRhNmY1NGM0OTQ5M2MxZThlNzRjYjk0ZiIsIm5iZiI6MTczMzI5NjgzOC42MzUsInN1YiI6IjY3NTAwMmM2NTIwMWY4YzE1ZjE3N2Y5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EmnC4jtUQ886XsS1MQ2s11jhoR0mN0IN62wGWeK4IJ8',
         },
       })
         .then((response) => {
@@ -162,15 +165,21 @@ const Form = () => {
         </>
       )}
 
-      <div className="container">
+      <div className="formcontainer">
+        
         <form>
+          <div className='formgroup'>
+        <div className='MovieImage'>
           {selectedMovie && (
             <img
               className="poster-image"
               src={`https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`}
               alt="Movie Poster"
             />
+            
           )}
+          </div>
+          <div className='fieldgroup'>
           <div className="field">
             Title:
             <input
@@ -211,10 +220,19 @@ const Form = () => {
               onChange={(e) => handleInputChange(e, 'vote_average')}
             />
           </div>
-
-          <button type="button" onClick={handleSave}>
+          </div>
+          <button type="button" className="btnSave" onClick={handleSave}>
             Save
           </button>
+          </div>
+{selectedMovie && (
+        <>
+        <MovieVideos movieId={selectedMovie.id} />
+        <MoviePhotos movieId={selectedMovie.id} />
+        <MovieCast movieId={selectedMovie.id} /> 
+      </>
+      )}
+          
         </form>
       </div>
     </>

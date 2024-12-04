@@ -43,12 +43,8 @@ function View() {
             {JSON.stringify(movie)}
           </div>
 
-          {movie.casts && movie.casts.length && (
-            <div>
-              <h1>Cast & Crew</h1>
-              {JSON.stringify(movie.casts)}
-            </div>
-          )}
+          
+
 
           <MovieGenres movieId={movie.tmdbId} />
 

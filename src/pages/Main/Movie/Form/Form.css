@@ -7,6 +7,17 @@
 }
 
 .poster-image {
-  width: 150px;
-  height: auto;
+  width: 300px;  /* Adjust width */
+  height: auto;  /* Maintain aspect ratio */
 }
+ .formgroup{
+  display: flex;
+  gap: 50px;
+ }
+.formcontainer{
+  margin:50px;
+}
+ .btnSave{
+  width: 50px;
+  height:30px;
+ }
