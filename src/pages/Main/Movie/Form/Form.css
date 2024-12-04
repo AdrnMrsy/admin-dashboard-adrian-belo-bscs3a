@@ -7,17 +7,69 @@
 }
 
 .poster-image {
-  width: 300px;  /* Adjust width */
-  height: auto;  /* Maintain aspect ratio */
+  width: 150px;
+  height: auto;
 }
- .formgroup{
+
+.container {
+  overflow: auto;
+  height:auto;
+}
+
+nav {
+  margin-top: 2rem;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  display: inline;
+  border: solid;
+  border-width: 1px 1px 0 1px;
+  margin: 0 5px 0 0;
+}
+
+.videolist {
   display: flex;
-  gap: 50px;
- }
-.formcontainer{
-  margin:50px;
 }
- .btnSave{
-  width: 50px;
-  height:30px;
- }
+
+.videosCont {
+  background-color: rgb(196, 196, 196);
+  
+}
+
+.videosMainCont {
+  background-color: black;
+  overflow: auto;
+  height: 700px;
+}
+.cast-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.cast-item {
+  width: 120px;
+  text-align: center;
+}
+
+.actor-image {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.movie-photo {
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
+}

@@ -13,6 +13,7 @@ import MainClient from "./clientPages/Main/MainClient";
 import Home from "./clientPages/Main/Movie/Home/Home";
 import View from "./clientPages/Main/Movie/View/View";
 import MovieContextProvider from "./context/MovieContext";
+import Users from './pages/Main/Users/Users';
 
 const router = createBrowserRouter([
   {
@@ -41,11 +42,11 @@ const router = createBrowserRouter([
     path: '/main',
     element: <Main />,
     children: [
-      //Temporarily disabled the dashboard route
-      // {
-      //   path: '/main/dashboard',
-      //   element: <Dashboard />,
-      // },
+      // Temporarily disabled the dashboard route
+      {
+        path: '/main/users',
+        element: <Users />,
+      },
       {
         path: '/main/movies',
         element: <Movie />,
