@@ -14,7 +14,9 @@ const Form = () => {
   let { movieId } = useParams();
   //const [description, setDescription] = useState("");
   const [selectedVideo, setSelectedVideo] = useState([]);
-  const [cast, setCast] = useState([]); 
+  const [selectedPhotos, setSelectedPhotos] = useState([]);
+  const [selectedCasts, setSelectedCasts] = useState([]);
+  const [casts, setCasts] = useState([]); 
   const [photos, setPhotos] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [totalPages, setTotalPages] = useState(1); 
@@ -84,7 +86,7 @@ const Form = () => {
       });
   
       console.log("Video added successfully:", response.data);
-      alert("Video added successfully!");
+      // alert("Video added successfully!");
       return true; // Indicate success
     } catch (error) {
       console.error("Error adding video:", error);
@@ -120,6 +122,47 @@ const Form = () => {
     }
   }, [videos]);
 //CAST FUNCTIONS
+// const handleAddCasts = async (movieId, actor) => {
+//   const accessToken = localStorage.getItem("accessToken");
+
+//   // Prepare cast data for a single actor
+//   const castData = {
+//     movieId: movieId,
+//     name: actor.name, // Cast name
+//     url: actor.photo || "https://via.placeholder.com/150x150?text=No+Photo+Available", // Default placeholder if no photo
+//     characterName: actor.character, // Character played by the cast
+//   };
+//  console.log(castData)
+//   try {
+//     const response = await axios({
+//       method: "post",
+//       url: "/casts", // Ensure this is the correct endpoint for adding casts
+//       data: castData, // Send cast data
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//         "Content-Type": "application/json",
+
+//       },
+//     });
+
+//     console.log("Cast added successfully:", response.data);
+//    alert("Cast added successfully!");
+//     return true; // Indicate success
+//   } catch (error) {
+//     console.error("Error adding cast:", error);
+//     alert("Failed to add cast. Please try again.");
+//     return false; // Indicate failure
+//   }
+// };
+
+
+
+useEffect(() => {
+  // Update the state when the component first renders
+  if (casts && casts.length > 0) {
+    setSelectedCasts(casts); // Set all videos into selectedcast once
+  }
+}, [casts]);
   const fetchCast = (tmdbId) => {
     return axios
       .get(`https://api.themoviedb.org/3/movie/${tmdbId}/credits?language=en-US`, {
@@ -130,18 +173,53 @@ const Form = () => {
       })
       .then((response) => {
         if (response.data.cast && response.data.cast.length > 0) {
-          setCast(response.data.cast); // Update state with cast data
+          setCasts(response.data.cast); // Update state with cast data
         } else {
-          setCast([]); // Set empty array if no cast data found
+          setCasts([]); // Set empty array if no cast data found
         }
         console.log("Cast data:", response.data.cast);
       })
       .catch((error) => {
         console.error("Error fetching cast:", error);
-        setCast([]); // Set empty array if there's an error
+        setCasts([]); // Set empty array if there's an error
       });
   };
 //PHOTOS FUNCTIONS  
+const handleAddPhotos = async (movieId, photo) => {
+  const accessToken = localStorage.getItem("accessToken");
+  const photoData = {
+    movieId: movieId,
+    url: photo?.file_path
+      ? `https://image.tmdb.org/t/p/w500${photo.file_path}`
+      : "https://via.placeholder.com/500x750?text=No+Photo+Available", // Default placeholder if no photo
+    description: photo?.file_path ? "Movie Poster" : "No photo available", // Set a name for the photo
+  };
+
+  try {
+    const response = await axios({
+      method: "post",
+      url: "/photos", // Ensure this is the correct endpoint for adding photos
+      data: photoData,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    console.log("Photo added successfully:", response.data);
+    // alert("Photo added successfully!");
+    return true; // Indicate success
+  } catch (error) {
+    console.error("Error adding photo:", error);
+    alert("Failed to add photo. Please try again.");
+    return false; // Indicate failure
+  }
+};
+useEffect(() => {
+  // Update the state when the component first renders
+  if (photos && photos.length > 0) {
+    setSelectedPhotos(photos); // Set all videos into selectedVideos once
+  }
+}, [photos]);
   const fetchPhotos = (tmdbId) => {
     return axios
       .get(`https://api.themoviedb.org/3/movie/${tmdbId}/images`, {
@@ -211,10 +289,9 @@ const Form = () => {
 
       // Get the movie ID, either from existing state or the response for a new movie
       const newMovieId = movieId || response.data.id; // Use existing movieId if present, otherwise get from response
-      console.log("safjadsfdsgfdsfhdsbfj", movieId || "sd");
-      console.log("safjadsfdsgfdsfhdsbfj", newMovieId);
+      console.log("show", movieId || "sd");
+      console.log("show", newMovieId);
       console.log("Movie saved successfully:", response.data);
-      alert("Movie saved successfully!");
 
       // Proceed to add the video
       if (selectedVideo && selectedVideo.length > 0) {
@@ -227,6 +304,27 @@ const Form = () => {
           }
         }
       }
+      if (selectedPhotos && selectedPhotos.length > 0) {
+        // Loop through selected videos and add each one
+        for (let photo of selectedPhotos) {
+          const isPhotoAdded = await handleAddPhotos(newMovieId, photo); // Pass movieId and video data
+          if (!isPhotoAdded) {
+            alert("One or more photos could not be added. Please try again.");
+            return;
+          }
+        }
+      }
+      // if (selectedCasts && selectedCasts.length > 0) {
+      //   // Loop through selected videos and add each one
+      //   for (let actor of selectedCasts) {
+      //     const isCastAdded = await handleAddCasts(newMovieId, actor); // Pass movieId and video data
+      //     if (!isCastAdded) {
+      //       alert("One or more Casts could not be added. Please try again.");
+      //       return;
+      //     }
+      //   }
+      // }
+      alert("Movie saved successfully!");
 
       // Navigate to the movie details page
       navigate(`/main/movies`);
@@ -440,6 +538,9 @@ const Form = () => {
         </form>
 
 
+       {/* Conditionally show Videos, Cast, and Photos only when creating a movie */}
+    {!movieId && (
+      <>
         <h2>Videos</h2>
         <div className="videosMainCont">
           {videos && videos.length > 0 ? (
@@ -458,20 +559,18 @@ const Form = () => {
                       allowFullScreen
                     ></iframe>
                   </div>
-                  {/* {setSelectedVideo(prevVideos => [...prevVideos, video])} */}
                 </div>
-
-              
               </div>
             ))
           ) : (
             <p>No videos found</p>
           )}
         </div>
+
         <h2>Cast</h2>
         <div className="cast-container">
-          {cast.length > 0 ? (
-            cast.map((actor) => (
+          {casts.length > 0 ? (
+            casts.map((actor) => (
               <div key={actor.id} className="cast-item">
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
@@ -502,6 +601,8 @@ const Form = () => {
             <p>No photos available</p>
           )}
         </div>
+      </>
+    )}
       </div>
 
     </div>

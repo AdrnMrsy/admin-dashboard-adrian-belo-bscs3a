@@ -14,6 +14,8 @@ import Home from "./clientPages/Main/Movie/Home/Home";
 import View from "./clientPages/Main/Movie/View/View";
 import MovieContextProvider from "./context/MovieContext";
 import Users from './pages/Main/Users/Users';
+import Videos from './pages/Main/Movie/Form/Forms/VideoForm/VideoForm';
+import Photos from './pages/Main/Movie/Form/Forms/PhotoForm/PhotoForm';
 
 const router = createBrowserRouter([
   {
@@ -52,15 +54,26 @@ const router = createBrowserRouter([
         element: <Movie />,
         children: [
           {
-            path: '/main/movies',
+            path: '', // Relative path for the default child
             element: <Lists />,
           },
           {
-            path: '/main/movies/form/:movieId?',
+            path: 'form/:movieId?', // Relative path for the form
             element: <Form />,
+            children: [
+              {
+                path: 'videos', // Relative path for videos
+                element: <Videos />,
+              },
+              {
+                path: 'photos', // Relative path for videos
+                element: <Photos />,
+              },
+            ],
           },
         ],
-      },
+      }
+      
     ],
   },
 ]);
