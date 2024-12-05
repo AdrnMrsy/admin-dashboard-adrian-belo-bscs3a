@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import './Main.css';
+import './Main2.css';
 
 function Main() {
   const accessToken = localStorage.getItem('accessToken');

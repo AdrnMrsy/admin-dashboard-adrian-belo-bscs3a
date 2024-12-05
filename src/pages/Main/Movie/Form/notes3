@@ -8,57 +8,31 @@ const Form = () => {
   const [searchedMovieList, setSearchedMovieList] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(undefined);
   const [movie, setMovie] = useState(undefined);
-  const [videos, setVideos] = useState([]); 
-  //const [newVideoUrl, setNewVideoUrl] = useState(""); 
+  const [videos, setVideos] = useState([]); // New state for videos
+  const [newVideoUrl, setNewVideoUrl] = useState(""); // New state for new video URL
   const navigate = useNavigate();
   let { movieId } = useParams();
-  //const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [selectedVideo, setSelectedVideo] = useState([]);
-  const [cast, setCast] = useState([]); 
-  const [photos, setPhotos] = useState([]); 
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [cast, setCast] = useState([]); // State for cast
+const [photos, setPhotos] = useState([]); // State for photos
+const [currentPage, setCurrentPage] = useState(1); 
   const [totalPages, setTotalPages] = useState(1); 
   const [isMovieListVisible, setIsMovieListVisible] = useState(false);
 
-//SEARCHING 
+
   const handlePrevPage = () => {
     if (currentPage > 1) {
       handleSearch(currentPage - 1);
     }
   };
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       handleSearch(currentPage + 1);
     }
   };
-  const handleSearch = useCallback(
-    (page = 1) => {
-      axios({
-        method: 'get',
-        url: `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
-        headers: {
-          Accept: 'application/json',
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDdmYTM5OWRhNmY1NGM0OTQ5M2MxZThlNzRjYjk0ZiIsIm5iZiI6MTczMzI5NjgzOC42MzUsInN1YiI6IjY3NTAwMmM2NTIwMWY4YzE1ZjE3N2Y5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EmnC4jtUQ886XsS1MQ2s11jhoR0mN0IN62wGWeK4IJ8',
-        },
-      })
-        .then((response) => {
-          setSearchedMovieList(response.data.results);
-          setTotalPages(response.data.total_pages); 
-          setCurrentPage(page); 
-          console.log(response.data.results);
-          setIsMovieListVisible(true); // Show the movie list after search
-        })
-        .catch((error) => {
-          console.error('Error fetching movie data:', error);
-        });
-    },
-    [query]
-  );
-  const handleToggleMovieList = () => {
-    setIsMovieListVisible(!isMovieListVisible); // Toggle visibility
-  };
-//VIDEOS
+
   const handleAddVideo = async (movieId, video) => {
     const accessToken = localStorage.getItem("accessToken");
     const videoData = {
@@ -92,6 +66,38 @@ const Form = () => {
       return false; // Indicate failure
     }
   };
+  
+
+  const convertYear = (date) => {
+    return date ? date.split("-")[0] : null;
+  };
+
+  const handleSearch = useCallback(
+    (page = 1) => {
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
+        headers: {
+          Accept: 'application/json',
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDdmYTM5OWRhNmY1NGM0OTQ5M2MxZThlNzRjYjk0ZiIsIm5iZiI6MTczMzI5NjgzOC42MzUsInN1YiI6IjY3NTAwMmM2NTIwMWY4YzE1ZjE3N2Y5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EmnC4jtUQ886XsS1MQ2s11jhoR0mN0IN62wGWeK4IJ8',
+        },
+      })
+        .then((response) => {
+          setSearchedMovieList(response.data.results);
+          setTotalPages(response.data.total_pages); 
+          setCurrentPage(page); 
+          console.log(response.data.results);
+          setIsMovieListVisible(true); // Show the movie list after search
+        })
+        .catch((error) => {
+          console.error('Error fetching movie data:', error);
+        });
+    },
+    [query]
+  );
+
+
   const fetchVideos = (tmdbId) => {
     return axios
       .get(
@@ -113,13 +119,6 @@ const Form = () => {
         setVideos(""); // Set to "" in case of error
       });
   };
-  useEffect(() => {
-    // Update the state when the component first renders
-    if (videos && videos.length > 0) {
-      setSelectedVideo(videos); // Set all videos into selectedVideos once
-    }
-  }, [videos]);
-//CAST FUNCTIONS
   const fetchCast = (tmdbId) => {
     return axios
       .get(`https://api.themoviedb.org/3/movie/${tmdbId}/credits?language=en-US`, {
@@ -141,7 +140,7 @@ const Form = () => {
         setCast([]); // Set empty array if there's an error
       });
   };
-//PHOTOS FUNCTIONS  
+  
   const fetchPhotos = (tmdbId) => {
     return axios
       .get(`https://api.themoviedb.org/3/movie/${tmdbId}/images`, {
@@ -163,7 +162,8 @@ const Form = () => {
         setPhotos([]); // Set empty array if there's an error
       });
   };
-//MOVIES
+  
+
   const handleSelectMovie = (movie) => {
     setSelectedMovie(movie);
     fetchVideos(movie.id); // Fetch videos for the selected movie
@@ -171,7 +171,7 @@ const Form = () => {
     fetchCast(movie.id); // Fetch videos for the selected movie
 
   };
-//SAVING TO DB
+
   const handleSave = async () => {
     
 
@@ -235,6 +235,7 @@ const Form = () => {
       alert("Failed to save the movie. Please try again.");
     }
   };
+
   useEffect(() => {
     if (movieId) {
       // Fetch movie details from your server
@@ -265,182 +266,197 @@ const Form = () => {
         .catch((error) => console.log(error));
     }
   }, [movieId]);
+  
+  
+  const handleToggleMovieList = () => {
+    setIsMovieListVisible(!isMovieListVisible); // Toggle visibility
+  };
 
+
+  useEffect(() => {
+    // Update the state when the component first renders
+    if (videos && videos.length > 0) {
+      setSelectedVideo(videos); // Set all videos into selectedVideos once
+    }
+  }, [videos]);
   return (
-    <div className="formmain">
+    <>
     <div className="maincon">
-      <div className="titleform">
-      <h1>{movieId !== undefined ? "Edit " : "Create "}Movie</h1>
+      <div>
+      <h1>{movieId !== undefined ? "Edit " : "Create "} Movie</h1>
       </div>
       <div>
-        {/* Search */}
-        {movieId === undefined && (
-          <>
-            <div className="search-container">
-              <div className="searchgroup">
-                <input
-                  type="text"
-                  className="inputsearch"
-                  placeholder="Search Movie"
-                  onChange={(event) => setQuery(event.target.value)}
-                />
-                <button type="button" className="btnsearch" onClick={() => handleSearch(1)}>
-                  <img
-                    src="https://img.icons8.com/?size=45&id=12456&format=png&color=FAFAFA"
-                    alt="Search Icon"
-                  />
-                </button>
-              </div>
+      {movieId === undefined && (
+  <>
+    <div className="search-container">
+      <div className="searchgroup">
+        <input
+          type="text"
+          className="inputsearch"
+          placeholder="Search Movie"
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <button type="button" className="btnsearch" onClick={() => handleSearch(1)}>
+          <img
+            src="https://img.icons8.com/?size=45&id=12456&format=png&color=FAFAFA"
+            alt="Search Icon"
+          />
+        </button>
+      </div>
 
-              {/* Toggle button to show/hide movie list */}
-              {isMovieListVisible && (
-                <button type="button" className="btn-toggle" onClick={handleToggleMovieList}>
-                  {isMovieListVisible ? 'Hide' : 'Show Movie List'}
-                </button>
-              )}
+      {/* Toggle button to show/hide movie list */}
+      {isMovieListVisible && (
+        <button type="button" className="btn-toggle" onClick={handleToggleMovieList}>
+          {isMovieListVisible ? 'Hide' : 'Show Movie List'}
+        </button>
+      )}
 
-              {/* Movie List */}
-              {isMovieListVisible && (
-                <div className="searched-movie">
-                  {searchedMovieList.map((movie) => (
-                    <p key={movie.id} onClick={() => handleSelectMovie(movie)}>
-                      {movie.original_title}
-                    </p>
-                  ))}
-                </div>
-              )}
+      {/* Movie List */}
+      {isMovieListVisible && (
+        <div className="searched-movie">
+          {searchedMovieList.map((movie) => (
+            <p key={movie.id} onClick={() => handleSelectMovie(movie)}>
+              {movie.original_title}
+            </p>
+          ))}
+        </div>
+      )}
 
-              {/* Pagination */}
-              {isMovieListVisible && (
-                <div className="pagination">
-                  <button
-                    className="btnpage"
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >
-                    <img
-                      src="https://img.icons8.com/?size=20&id=26146&format=png&color=FAFAFA"
-                      alt="Left Icon"
-                    />
-                  </button>
-                  <span>
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <button
-                    onClick={handleNextPage}
-                    disabled={currentPage === totalPages}
-                    className="btnpage"
-                  >
-                    <img
-                      src="https://img.icons8.com/?size=20&id=26147&format=png&color=FAFAFA"
-                      alt="Right Icon"
-                    />
-                  </button>
-                </div>
-              )}
-            </div>
-            <hr />
-          </>
-        )}
+      {/* Pagination */}
+      {isMovieListVisible && (
+        <div className="pagination">
+          <button
+            className="btnpage"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            <img
+              src="https://img.icons8.com/?size=20&id=26146&format=png&color=FAFAFA"
+              alt="Left Icon"
+            />
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="btnpage"
+          >
+            <img
+              src="https://img.icons8.com/?size=20&id=26147&format=png&color=FAFAFA"
+              alt="Right Icon"
+            />
+          </button>
+        </div>
+      )}
+    </div>
+    <hr />
+  </>
+)}
 
       </div>
-    </div>
-
-    <div>
+</div>
+      <div>
       <div className="container">
         <form className="formgroup">
-          <div className="Movieimg">
-            {selectedMovie ? (
-              <img
-                className="poster-image"
-                src={`https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`}
-                alt={selectedMovie.original_title}
-              />
-            ) : (
-              ""
-            )}
+        <div>
+          {selectedMovie ? (
+            <img
+              className="poster-image"
+              src={`https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`}
+              alt={selectedMovie.original_title}
+            />
+          ) : (
+            ""
+          )}
           </div>
           <div className="fieldgroup">
-            <div className="field">
-              Title:
-              <input
-                className="inputtext"
-                type="text"
-                disabled={!movieId}
-                value={selectedMovie ? selectedMovie.original_title : ""}
-                onChange={(e) =>
-                  setSelectedMovie({
-                    ...selectedMovie,
-                    original_title: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="field">
-              Overview:
-              <textarea
-                className="inputtext"
-                disabled={!movieId}
-                rows={10}
-                value={selectedMovie ? selectedMovie.overview : ""}
-                onChange={(e) =>
-                  setSelectedMovie({ ...selectedMovie, overview: e.target.value })
-                }
-              />
-            </div>
-            <div className="field">
-              Popularity:
-              <input
-                className="inputtext"
-                type="text"
-                disabled={!movieId}
-                value={selectedMovie ? selectedMovie.popularity : ""}
-                onChange={(e) =>
-                  setSelectedMovie({
-                    ...selectedMovie,
-                    popularity: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="field">
-              Release Date:
-              <input
-                className="inputtext"
-                type="text"
-                disabled={!movieId}
-                value={selectedMovie ? selectedMovie.release_date : ""}
-                onChange={(e) =>
-                  setSelectedMovie({
-                    ...selectedMovie,
-                    release_date: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="field">
-              Vote Average:
-              <input
-                className="inputtext"
-                type="text"
-                disabled={!movieId}
-                value={selectedMovie ? selectedMovie.vote_average : ""}
-                onChange={(e) =>
-                  setSelectedMovie({
-                    ...selectedMovie,
-                    vote_average: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <button type="button"  className='btnsave' onClick={handleSave}>
-              Save
-            </button>
+          <div className="field">
+            Title:
+            <input
+            className="inputtext"
+              type="text"
+              disabled={!movieId}
+              value={selectedMovie ? selectedMovie.original_title : ""}
+              onChange={(e) =>
+                setSelectedMovie({
+                  ...selectedMovie,
+                  original_title: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="field">
+            Overview:
+            <textarea
+                        className="inputtext"
+
+              disabled={!movieId}
+              rows={10}
+              value={selectedMovie ? selectedMovie.overview : ""}
+              onChange={(e) =>
+                setSelectedMovie({ ...selectedMovie, overview: e.target.value })
+              }
+            />
+          </div>
+          <div className="field">
+            Popularity:
+            <input
+                        className="inputtext"
+
+              type="text"
+              disabled={!movieId}
+              value={selectedMovie ? selectedMovie.popularity : ""}
+              onChange={(e) =>
+                setSelectedMovie({
+                  ...selectedMovie,
+                  popularity: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="field">
+            Release Date:
+            <input
+                        className="inputtext"
+
+              type="text"
+              disabled={!movieId}
+              value={selectedMovie ? selectedMovie.release_date : ""}
+              onChange={(e) =>
+                setSelectedMovie({
+                  ...selectedMovie,
+                  release_date: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="field">
+            Vote Average:
+            <input
+                        className="inputtext"
+
+              type="text"
+              disabled={!movieId}
+              value={selectedMovie ? selectedMovie.vote_average : ""}
+              onChange={(e) =>
+                setSelectedMovie({
+                  ...selectedMovie,
+                  vote_average: e.target.value,
+                })
+              }
+            />
+          </div>
+          <button type="button"  className='btnsave' onClick={handleSave}>
+            Save
+          </button>
           </div>
         </form>
 
 
         <h2>Videos</h2>
+
         <div className="videosMainCont">
           {videos && videos.length > 0 ? (
             videos.map((video) => (
@@ -448,6 +464,7 @@ const Form = () => {
                 <p>{video.name}</p>
                 <div className="videolist">
                   <div className="video-preview">
+                    {/* Assuming the video.key is the unique identifier for a YouTube video */}
                     <iframe
                       width="280"
                       height="158"
@@ -470,41 +487,41 @@ const Form = () => {
         </div>
         <h2>Cast</h2>
         <div className="cast-container">
-          {cast.length > 0 ? (
-            cast.map((actor) => (
-              <div key={actor.id} className="cast-item">
-                <img
-                  src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
-                  alt={actor.name}
-                  className="actor-image"
-                />
-                <p>{actor.name}</p>
-                <p>{actor.character}</p>
-              </div>
-            ))
-          ) : (
-            <p>No cast information available</p>
-          )}
-        </div>
+  {cast.length > 0 ? (
+    cast.map((actor) => (
+      <div key={actor.id} className="cast-item">
+        <img
+          src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
+          alt={actor.name}
+          className="actor-image"
+        />
+        <p>{actor.name}</p>
+        <p>{actor.character}</p>
+      </div>
+    ))
+  ) : (
+    <p>No cast information available</p>
+  )}
+</div>
 
         <h2>Photos</h2>
         <div className="photos-container">
-          {photos.length > 0 ? (
-            photos.map((photo) => (
-              <img
-                key={photo.file_path}
-                src={`https://image.tmdb.org/t/p/w500/${photo.file_path}`}
-                alt="Movie photo"
-                className="movie-photo"
-              />
-            ))
-          ) : (
-            <p>No photos available</p>
-          )}
-        </div>
-      </div>
+  {photos.length > 0 ? (
+    photos.map((photo) => (
+      <img
+        key={photo.file_path}
+        src={`https://image.tmdb.org/t/p/w500/${photo.file_path}`}
+        alt="Movie photo"
+        className="movie-photo"
+      />
+    ))
+  ) : (
+    <p>No photos available</p>
+  )}
+</div>
+</div>
 
-    </div>
+      </div>
 
 
       {movieId && (
@@ -538,7 +555,7 @@ const Form = () => {
           <Outlet />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

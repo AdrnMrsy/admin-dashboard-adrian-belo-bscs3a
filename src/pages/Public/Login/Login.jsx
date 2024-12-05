@@ -71,7 +71,7 @@ function Login() {
   return (
     <div className="Login">
       <div className="main-container">
-        <h1 style={{ color: "#4caf50", marginBottom: "20px" }}>CineScope</h1>
+        <h1 style={{ color: "#9b64dc", marginBottom: "20px" }}>CineScope</h1>
         <form>
           <div className="form-container">
             <div className="form-group">

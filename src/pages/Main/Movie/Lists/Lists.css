@@ -1,17 +1,118 @@
+/* General container styles */
 .lists-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.create-container {
-  align-self: flex-end;
-  margin: 1rem 0;
-}
-.table-container,
-.movie-lists {
-  width: 100%;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: #f0f0f0;
+  background-color: #121212;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
+/* Create button container */
+.create-container {
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.create-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #121212;
+  background-color: #bb86fc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-container button:hover {
+  background-color: #9b64dc;
+}
+
+/* Table container */
 .table-container {
-  text-align: center;
+  overflow-x: auto;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+}
+
+.movie-lists {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  background-color: #1e1e1e;
+}
+
+.movie-lists thead {
+  background-color: #292929;
+  color: #bb86fc;
+}
+
+.movie-lists th,
+.movie-lists td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #333;
+}
+
+.movie-lists th {
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.movie-lists tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+.movie-lists tr:hover {
+  background-color: #373737;
+}
+
+.movie-lists td {
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* Action buttons */
+.movie-lists button {
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #121212;
+  background-color: #03dac5;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.movie-lists button:hover {
+  background-color: #01a591;
+}
+
+.movie-lists button:last-child {
+  background-color: #cf6679;
+}
+
+.movie-lists button:last-child:hover {
+  background-color: #b43f50;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+  .create-container button {
+    width: 100%;
+  }
+
+  .movie-lists th,
+  .movie-lists td {
+    font-size: 12px;
+  }
+
+  .movie-lists button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
 }

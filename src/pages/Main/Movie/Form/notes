@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Form.css';
 import { useNavigate } from 'react-router-dom';
-import MovieVideos from '../MovieVideos/MovieVideos';
-import MoviePhotos from '../MoviePhotos/MoviePhotos';
-import MovieCast from '../MovieCast/MovieCast';
+import MovieVideos from '../../../../components/MovieVideos/MovieVideos';
+import MoviePhotos from '../../../../components/MoviePhotos/MoviePhotos';
+import MovieCast from '../../../../components/MovieCast/MovieCast';
 
 const Form = () => {
   const [query, setQuery] = useState('');
@@ -111,18 +111,7 @@ const Form = () => {
   }, [movieId]);
 
   
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      handleSearch(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      handleSearch(currentPage + 1);
-    }
-  };
-
+  zzz
   return (
     <>
       <h1>{movieId !== undefined ? 'Edit ' : 'Create '} Movie</h1>

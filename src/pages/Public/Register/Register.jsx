@@ -44,7 +44,7 @@ function Register() {
       const res = await axios.post('/admin/register', formData);
       console.log(res);
       localStorage.setItem('accessToken', res.data.access_token);
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       console.error(error);
       setStatus('idle');

@@ -3,6 +3,9 @@ import { useMovieContext } from "../../../../context/MovieContext";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import MovieGenres from "../../../../components/MovieGenres/MovieGenres";
+import MovieCast from "../../../../components/MovieCast/MovieCast";
+import MoviePhotos from "../../../../components/MoviePhotos/MoviePhotos";
+import MovieVideos from "../../../../components/MovieVideos/MovieVideos";
 
 function View() {
   const { movie, setMovie } = useMovieContext();
@@ -40,13 +43,16 @@ function View() {
               </h1>
             </div>
             <h3>{movie.overview}</h3>
-            {JSON.stringify(movie)}
+            {/* {JSON.stringify(movie)} */}
           </div>
 
           
 
 
           <MovieGenres movieId={movie.tmdbId} />
+          <MovieVideos movieId={movie.tmdbId} />
+          <MoviePhotos movieId={movie.tmdbId} />
+          <MovieCast movieId={movie.tmdbId} />
 
           {movie.videos && movie.videos[0] ? (
             <div className="video-preview">

@@ -50,7 +50,7 @@ input {
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 5px #4caf50;
+  box-shadow: 0 0 5px #dfe0df;
 }
 
 .errors {
@@ -60,7 +60,7 @@ input:focus {
 
 .show-password {
   margin-bottom: 16px;
-  color: #4caf50;
+  color: #9b64dc;
   cursor: pointer;
   font-size: 14px;
 }
@@ -75,7 +75,7 @@ input:focus {
   font-size: 16px;
   border: none;
   border-radius: 6px;
-  background-color: #4caf50;
+  background-color: #9b64dc;
   color: #fff;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
@@ -87,7 +87,7 @@ input:focus {
 }
 
 .submit-container button:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: #4c534c;
   transform: scale(1.05);
 }
 
@@ -97,7 +97,7 @@ input:focus {
 }
 
 .register-container a {
-  color: #4caf50;
+  color: #9b64dc;
   text-decoration: none;
 }
 
