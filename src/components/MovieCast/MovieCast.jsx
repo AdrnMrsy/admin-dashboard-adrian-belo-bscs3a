@@ -26,8 +26,10 @@ const MovieCast = ({ movieId }) => {
   }, [movieId]);
 
   return (
+    <div className='castcon'>
+      <h2>Cast</h2>
     <div className="cast-container">
-      <h3>Cast</h3>
+      
       {cast.length > 0 ? (
         <div className="cast-list">
           {cast.map((member) => (
@@ -42,13 +44,14 @@ const MovieCast = ({ movieId }) => {
                 className="cast-image"
               />
               <p>{member.name}</p>
-              <p>{member.character}</p>
+              <p className='mem'>{member.character}</p>
             </div>
           ))}
         </div>
       ) : (
         <p>No cast information available for this movie.</p>
       )}
+    </div>
     </div>
   );
 };

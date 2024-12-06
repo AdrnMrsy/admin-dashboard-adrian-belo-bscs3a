@@ -159,7 +159,7 @@ nav li {
   gap: 15px;
 }
 
-.cast-container {
+.casts-container {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;

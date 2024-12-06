@@ -122,38 +122,39 @@ const Form = () => {
     }
   }, [videos]);
 //CAST FUNCTIONS
-// const handleAddCasts = async (movieId, actor) => {
-//   const accessToken = localStorage.getItem("accessToken");
+const handleAddCasts = async (movieId, actor) => {
+  const accessToken = localStorage.getItem("accessToken");
+  const userId=1;
+  // Prepare cast data for a single actor
+  const castData = {
+    userId: userId,
+    movieId: movieId,
+    name: actor.name, // Cast name
+    url: actor.photo || "https://via.placeholder.com/150x150?text=No+Photo+Available", // Default placeholder if no photo
+    characterName: actor.character, // Character played by the cast
+  };
+ console.log(castData)
+  try {
+    const response = await axios({
+      method: "post",
+      url: "/casts", // Ensure this is the correct endpoint for adding casts
+      data: castData, // Send cast data
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
 
-//   // Prepare cast data for a single actor
-//   const castData = {
-//     movieId: movieId,
-//     name: actor.name, // Cast name
-//     url: actor.photo || "https://via.placeholder.com/150x150?text=No+Photo+Available", // Default placeholder if no photo
-//     characterName: actor.character, // Character played by the cast
-//   };
-//  console.log(castData)
-//   try {
-//     const response = await axios({
-//       method: "post",
-//       url: "/casts", // Ensure this is the correct endpoint for adding casts
-//       data: castData, // Send cast data
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//         "Content-Type": "application/json",
+      },
+    });
 
-//       },
-//     });
-
-//     console.log("Cast added successfully:", response.data);
-//    alert("Cast added successfully!");
-//     return true; // Indicate success
-//   } catch (error) {
-//     console.error("Error adding cast:", error);
-//     alert("Failed to add cast. Please try again.");
-//     return false; // Indicate failure
-//   }
-// };
+    console.log("Cast added successfully:", response.data);
+   alert("Cast added successfully!");
+    return true; // Indicate success
+  } catch (error) {
+    console.error("Error adding cast:", error);
+    alert("Failed to add cast. Please try again.");
+    return false; // Indicate failure
+  }
+};
 
 
 
@@ -568,7 +569,7 @@ useEffect(() => {
         </div>
 
         <h2>Cast</h2>
-        <div className="cast-container">
+        <div className="casts-container">
           {casts.length > 0 ? (
             casts.map((actor) => (
               <div key={actor.id} className="cast-item">

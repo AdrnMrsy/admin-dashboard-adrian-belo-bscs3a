@@ -3,12 +3,11 @@ import { useMovieContext } from "../../../../context/MovieContext";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import MovieGenres from "../../../../components/MovieGenres/MovieGenres";
-import MovieCast from "../../../../components/MovieCast/MovieCast";
-import MoviePhotos from "../../../../components/MoviePhotos/MoviePhotos";
-import MovieVideos from "../../../../components/MovieVideos/MovieVideos";
+import MovieCast from "../../../../components/MovieCast/MovieCast";// import MoviePhotos from "../../../../components/MoviePhotos/MoviePhotos";
+// import MovieVideos from "../../../../components/MovieVideos/MovieVideos";
 import './View.css';
 
-function View() {
+function View1() {
   const { movie, setMovie } = useMovieContext();
 
   const { movieId } = useParams();
@@ -139,4 +138,4 @@ function View() {
   );
 }
 
-export default View;
+export default View1;

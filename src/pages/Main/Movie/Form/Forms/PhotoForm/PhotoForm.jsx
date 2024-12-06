@@ -31,7 +31,7 @@ const Photos = () => {
       const accessToken = localStorage.getItem("accessToken");
   
       axios
-        .delete(`/movies/${movieId}/photos/${photoId}`, {
+        .delete(`/photos/${photoId}`, {
           headers: {
             'Authorization': `Bearer ${accessToken}` // Add Bearer token here
           }

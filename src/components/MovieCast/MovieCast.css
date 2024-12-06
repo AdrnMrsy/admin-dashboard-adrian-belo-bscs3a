@@ -1,10 +1,22 @@
+.castcon h2{
+  margin-top: 60px;
+  margin-right: 70px;
+  margin-left: 70px;
+
+}
 .cast-container {
     margin-top: 20px;
+    height:250px;
+    width: auto;
+    overflow-x: auto; /* Enables horizontal scrolling */
+  overflow-y: hidden; /* Hides vertical scrolling */
+scrollbar-width: none;
+margin-left: 70px;
+margin-right: 70px;
   }
   
   .cast-list {
     display: flex;
-    flex-wrap: wrap;
     
   }
   
@@ -23,5 +35,8 @@
   
   .cast-item p {
     margin: 5px 0;
+  }
+  .mem{
+    font-size:11px;
   }
   

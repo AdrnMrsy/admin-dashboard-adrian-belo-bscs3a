@@ -6,6 +6,7 @@ function Main() {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
   const handleLogout = () => {
+    localStorage.removeItem('email');
     localStorage.removeItem('accessToken');
     navigate('/');
   };
@@ -24,8 +25,18 @@ function Main() {
       <div className='container'>
         <div className='navigation'>
           <ul>
+          <li>
+              <a onClick={() => navigate('/')}>
+                
+              <div className='logotitle'>
+        <img src='https://img.icons8.com/?size=35&id=97657&format=png&color=9b64dc' alt='logo'/>
+
+        <p style={{ color: "#9b64dc",marginLeft:"5px",fontSize:"20px"  }}>CineScope</p>
+        </div>
+              </a>
+            </li>
             <li>
-              <a href='/main/dashboard'>
+              <a href='/main/home1'>
               <img
                     src="https://img.icons8.com/?size=30&id=Yj5svDsC4jQA&format=png&color=FAFAFA"
                     alt="Dashboard"
