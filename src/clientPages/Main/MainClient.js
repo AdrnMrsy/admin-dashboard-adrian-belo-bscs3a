@@ -28,16 +28,37 @@ function MainClient() {
       <div className='container'>
         <div className='navigation'>
           <ul>
-            <li>
-              <a onClick={() => navigate('/')}>Movies</a>
+          <li>
+              <a onClick={() => navigate('/')}>
+                
+              <div className='logotitle'>
+        <img src='https://img.icons8.com/?size=35&id=97657&format=png&color=9b64dc' alt='logo'/>
+
+        <p style={{ color: "#9b64dc",marginLeft:"5px",fontSize:"20px"  }}>CineScope</p>
+        </div>
+              </a>
             </li>
+            {/* <li>
+              <a onClick={() => navigate('/')}>
+                
+                   <img
+                    src="https://img.icons8.com/?size=35&id=59842&format=png&color=FAFAFA"
+                    alt="Movies"
+                  />
+              </a>
+            </li> */}
             {accessToken ? (
               <li className='logout'>
-                <a onClick={handleLogout}>Logout</a>
+                <a onClick={handleLogout}>
+                <img
+                    src="https://img.icons8.com/?size=35&id=uPAa8hABNcMw&format=png&color=FAFAFA"
+                    alt="Logout"
+                  />
+                </a>
               </li>
             ) : (
               <li className='login'>
-                <a onClick={handleGoToLoginClick}>Login</a>
+                <a onClick={handleGoToLoginClick}>SignIn</a>
               </li>
             )}
           </ul>

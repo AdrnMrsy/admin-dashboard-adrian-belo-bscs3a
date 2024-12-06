@@ -37,14 +37,20 @@ const Home = () => {
     return;
   }, [featuredMovie]);
 
+  const convertYear = (date) => {
+    return date ? date.split("-")[0] : null;
+  };
   return (
-    <div className="main-container">
-      <h1 className="page-title">Movies</h1>
+    <div className="mainmovie-container">
+      
       {featuredMovie && movieList.length ? (
+      <div className="moviecont">
+        
         <div className="featured-list-container">
           <div
             className="featured-backdrop"
             style={{
+              objectFit:"fill",
               background: `url(${
                 featuredMovie.backdropPath !==
                 "https://image.tmdb.org/t/p/original/undefined"
@@ -53,13 +59,35 @@ const Home = () => {
               }) no-repeat center top`,
             }}
           >
-            <span className="featured-movie-title">{featuredMovie.title}</span>
+            <div className="titlecont">
+            <div className="groupdetails">
+              <span className="featured-movie-title">{featuredMovie.title}</span>
+              <span className="moviedate">{featuredMovie.releaseDate}</span>
+              <span className="moviedate">{featuredMovie.overview}</span>
+              <button 
+              className="viewbtn"
+              onClick={() => {
+                navigate(`/view/${featuredMovie.id}`);
+                setMovie(featuredMovie);
+              }}>VIEW</button>
+
+            </div>
+           
+            </div>
           </div>
+          
         </div>
+       
+
+      </div>
+
       ) : (
         <div className="featured-list-container-loader"></div>
       )}
+      <div className="cent">
+      <h1>MOVIES</h1>
       <div className="list-container">
+      
         {movieList.map((movie) => (
           <div key={movie.id}>
             <MovieCards
@@ -71,6 +99,7 @@ const Home = () => {
             />
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

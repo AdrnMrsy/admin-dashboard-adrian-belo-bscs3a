@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './MovieGenres.css'
 
 const MovieGenres = ({ movieId }) => {
   const [genres, setGenres] = useState([]);
@@ -38,13 +39,16 @@ const MovieGenres = ({ movieId }) => {
     return <div>{error}</div>;
   }
 
-  // Join genres with commas, and use the `join()` method to handle commas
-  const genreList = genres.map((genre) => genre.name).join(", ");
 
   return (
-    <div>
-      <h3>Genres:</h3>
-      <p>{genreList}</p>
+    <div className="genres-container">
+      <div className="genres-list">
+        {genres.map((genre) => (
+          <div key={genre.id} className="genre-item">
+            {genre.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

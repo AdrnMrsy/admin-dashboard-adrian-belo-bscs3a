@@ -25,16 +25,36 @@ function Main() {
         <div className='navigation'>
           <ul>
             <li>
-              <a href='/main/dashboard'>Dashboard</a>
+              <a href='/main/dashboard'>
+              <img
+                    src="https://img.icons8.com/?size=30&id=Yj5svDsC4jQA&format=png&color=FAFAFA"
+                    alt="Dashboard"
+                  />
+              </a>
             </li>
             <li>
-              <a href='/main/users'>Users</a>
+              <a href='/main/users'>
+              <img
+                    src="https://img.icons8.com/?size=30&id=ABBSjQJK83zf&format=png&color=FAFAFA"
+                    alt="User"
+                  />
+              </a>
             </li>
             <li>
-              <a href='/main/movies'>Movies</a>
+              <a href='/main/movies'>
+              <img
+                    src="https://img.icons8.com/?size=30&id=59842&format=png&color=FAFAFA"
+                    alt="Movies"
+                  />
+              </a>
             </li>
             <li className='logout'>
-              <a onClick={handleLogout}>Logout</a>
+              <a onClick={handleLogout}>
+              <img
+                    src="https://img.icons8.com/?size=30&id=uPAa8hABNcMw&format=png&color=FAFAFA"
+                    alt="Logout"
+                  />
+              </a>
             </li>
           </ul>
         </div>

@@ -54,13 +54,16 @@ function Login() {
       .then((res) => {
         console.log(res);
         localStorage.setItem('accessToken', res.data.access_token);
+        localStorage.setItem('email', email);
+
+
         navigate('/main/movies');
         setStatus('idle');
       })
       .catch((e) => {
         console.log(e);
         setStatus('idle');
-        // alert(e.response.data.message);
+        alert(e.response.data.message);
       });
   };
 
@@ -70,8 +73,12 @@ function Login() {
 
   return (
     <div className="Login">
-      <div className="main-container">
-        <h1 style={{ color: "#9b64dc", marginBottom: "20px" }}>CineScope</h1>
+      <div className="mainlog-container">
+        <div className='logintitle'>
+        <img src='https://img.icons8.com/?size=69&id=97657&format=png&color=9b64dc' alt='logo'/>
+
+        <h1 style={{ color: "#9b64dc",marginLeft:"5px", marginBottom: "20px",  }}>CineScope</h1>
+        </div>
         <form>
           <div className="form-container">
             <div className="form-group">

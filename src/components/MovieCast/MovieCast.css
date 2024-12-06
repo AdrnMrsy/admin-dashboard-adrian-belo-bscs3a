@@ -5,6 +5,7 @@
   .cast-list {
     display: flex;
     flex-wrap: wrap;
+    
   }
   
   .cast-item {
@@ -14,11 +15,11 @@
   }
   
   .cast-image {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: rgba(180, 180, 180, 0.24) 0px 3px 8px;  }
   
   .cast-item p {
     margin: 5px 0;

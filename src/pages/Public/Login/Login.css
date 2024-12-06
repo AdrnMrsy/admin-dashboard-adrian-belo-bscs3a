@@ -4,8 +4,11 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
 }
-
-.main-container {
+.logintitle{
+  display: flex;
+   margin: 20px;
+}
+.mainlog-container {
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -47,14 +47,17 @@ const Lists = () => {
 
   return (
     <div className='lists-container'>
+      
       <div className='create-container'>
+      <h1>Movies</h1>
         <button
           type='button'
+          className='btncreate'
           onClick={() => {
             navigate('/main/movies/form');
           }}
         >
-          Create new
+          ADD          <img src='https://img.icons8.com/?size=25&id=sE8CuzuVQX3D&format=png&color=000000'alt='ADD'/>
         </button>
       </div>
       <div className='table-container'>

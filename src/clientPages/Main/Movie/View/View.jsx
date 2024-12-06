@@ -6,6 +6,7 @@ import MovieGenres from "../../../../components/MovieGenres/MovieGenres";
 import MovieCast from "../../../../components/MovieCast/MovieCast";
 import MoviePhotos from "../../../../components/MoviePhotos/MoviePhotos";
 import MovieVideos from "../../../../components/MovieVideos/MovieVideos";
+import './View.css';
 
 function View() {
   const { movie, setMovie } = useMovieContext();
@@ -37,17 +38,46 @@ function View() {
       {movie && (
         <>
           <div>
-            <div className="banner">
-              <h1>
-                {movie.title} {`(${convertYear(movie.releaseDate)})`}
-              </h1>
+            <div className="viewmain">
+          <div className="viewcontainer">
+          <div
+            className="viewbackdrop"
+            style={{
+              objectFit:"fill",
+              background: `url(${
+                movie.backdropPath !==
+                "https://image.tmdb.org/t/p/original/undefined"
+                  ? movie.backdropPath
+                  : movie.posterPath
+              }) no-repeat center top`,
+            }}
+          >
+            
+            <div className="titlecontv">
+              <div className="divgv">
+              <div className="groupdetailsv">
+                <span className="featured-movie-titlev">{movie.title}</span>
+                <MovieGenres movieId={movie.tmdbId} />
+                <span className="moviedatev">{movie.releaseDate}</span>
+                <span className="moviedatev">{movie.overview}</span>
+              </div>
+              <div className="posterv">
+              <img
+                className="poster-imagev"
+                src={`https://image.tmdb.org/t/p/original/${movie.posterPath}` }
+                alt={movie.original_title}
+              />
+              </div>
+              </div>
             </div>
-            <h3>{movie.overview}</h3>
+          
             {/* {JSON.stringify(movie)} */}
+          </div>
+          </div>
+          </div>
           </div>
 
         
-          <MovieGenres movieId={movie.tmdbId} />
           {/* <MovieVideos movieId={movie.tmdbId} /> */}
           {/* <MoviePhotos movieId={movie.tmdbId} /> */}
           <MovieCast movieId={movie.tmdbId} />

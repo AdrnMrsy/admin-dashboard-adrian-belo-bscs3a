@@ -13,12 +13,16 @@
 /* Create button container */
 .create-container {
   margin-bottom: 20px;
-  text-align: right;
+  display: flex;
+  gap: 1000px;
+  align-items: center;
 }
 
 .create-container button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 15px;
+  height:50px;
+  font-weight:bold ;
   color: #121212;
   background-color: #bb86fc;
   border: none;
@@ -27,6 +31,11 @@
   transition: background-color 0.3s ease;
 }
 
+.btncreate{
+  display:flex;
+  align-items: center;
+  
+}
 .create-container button:hover {
   background-color: #9b64dc;
 }
