@@ -31,7 +31,8 @@
   overflow-y: auto; 
   max-height: 300px; 
   scrollbar-width: thin; 
-  scrollbar-color: #888 #f9f9f9;}
+  scrollbar-color: #888 #f9f9f9;
+}
 
 .searched-movie p {
   cursor: pointer;
@@ -146,10 +147,11 @@ nav li {
 
 .videolist {
   display: flex;
+  
 }
 
 .videosCont {
-  background-color: rgb(87, 86, 86);
+  background-color: rgba(87, 86, 86, 0.089);
   
 }
 
@@ -183,4 +185,15 @@ nav li {
 .movie-photo {
   height: 150px;
   object-fit: cover;
+}
+
+.loadingstate{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+}
+
+.loadingstate p{
+  font-size: 20px;
 }

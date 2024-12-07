@@ -56,9 +56,19 @@ height: 100%;
 
   .viewvid{
     margin-left: 70px;
-
+    margin-right: 70px;
+    height: 90vh;
+    width:auto;
   }
-  .viewphoto{
+  .video-preview{
+    margin-bottom: 70px;
+  }
+.vvideos{
+  display: flex;
+  flex-wrap: wrap;
+justify-content: space-between;
+}
+  .viewphoto{ 
     margin-left: 70px;
     margin-right: 70px;
 
@@ -70,6 +80,8 @@ scrollbar-width: none;
     margin-left: 70px;
 
   }
+ 
+  
   .photo-preview{
 display:flex;
 gap:20px;

@@ -65,12 +65,7 @@ const Home1 = () => {
               <span className="featured-movie-title">{featuredMovie.title}</span>
               <span className="moviedate">{featuredMovie.releaseDate}</span>
               <span className="moviedate">{featuredMovie.overview}</span>
-              <button 
-              className="viewbtn"
-              onClick={() => {
-                navigate(`/main/home1/view1/${featuredMovie.id}`);
-                setMovie(featuredMovie);
-              }}>VIEW</button>
+              
 
             </div>
            
@@ -93,10 +88,6 @@ const Home1 = () => {
           <div key={movie.id}>
             <MovieCards
               movie={movie}
-              onClick={() => {
-                navigate(`/main/home1/view1/${movie.id}`);
-                setMovie(movie);
-              }}
             />
           </div>
         ))}

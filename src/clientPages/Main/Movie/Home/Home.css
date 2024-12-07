@@ -89,3 +89,23 @@ margin-left: 30px;
   color: white;
   border: solid 1px WHITE;
 }
+
+.ssearch{
+  position: fixed;
+  width:500px;
+  top:2%;
+  left: 38%;
+  z-index: 1000;
+}
+.ssearch-input{
+  width:350px;
+}
+.list-containerss {
+  display: flex;
+  overflow-x: auto; 
+  padding: 10px 0; 
+  gap: 15px; 
+  scroll-snap-type: x mandatory; 
+  scrollbar-width: none;
+  background-color: rgba(0, 0, 0, 0.418);
+}

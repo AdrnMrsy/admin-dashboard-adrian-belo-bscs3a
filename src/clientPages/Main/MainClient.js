@@ -1,10 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './Main.css';
+import axios from 'axios';
+
 
 function MainClient() {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
   };
@@ -14,6 +18,27 @@ function MainClient() {
     navigate('/login'); // Navigate to the login page
   };
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  
+    if (e.target.value.trim()) {
+      axios
+        .get(`/movies/search?q=${e.target.value}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+        .then((response) => {
+          setSearchResults(response.data.movies);
+        })
+        .catch((err) => {
+          console.error('Error fetching search results:', err);
+          setSearchResults([]); 
+        });
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  
   useEffect(() => {
     if (
       accessToken === undefined ||
@@ -56,13 +81,17 @@ function MainClient() {
                   />
                 </a>
               </li>
+              
             ) : (
               <li className='login'>
                 <a onClick={handleGoToLoginClick}>SignIn</a>
               </li>
             )}
+            
           </ul>
         </div>
+        
+
         <div className='outlet'>
           <Outlet />
         </div>

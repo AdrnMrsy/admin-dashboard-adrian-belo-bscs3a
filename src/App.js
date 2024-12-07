@@ -17,7 +17,7 @@ import Users from './pages/Main/Users/Users';
 import Videos from './pages/Main/Movie/Form/Forms/VideoForm/VideoForm';
 import Photos from './pages/Main/Movie/Form/Forms/PhotoForm/PhotoForm';
 import Home1 from './pages/Main/Movie/Home/Home1';
-import View1 from './pages/Main/Movie/View/View1';
+import Casts from './pages/Main/Movie/Form/Forms/CastForm/CastForm';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,12 +48,7 @@ const router = createBrowserRouter([
       {
         path: 'home1',  
         element: <Home1 />,
-        children: [
-          {
-            path: 'view1/:movieId?',  
-            element: <View1 />,
-          },
-        ]
+       
       },
       
       {
@@ -79,6 +74,10 @@ const router = createBrowserRouter([
               {
                 path: 'photos', // Relative path for videos
                 element: <Photos />,
+              },
+              {
+                path: 'casts', // Relative path for videos
+                element: <Casts />,
               },
             ],
           },
