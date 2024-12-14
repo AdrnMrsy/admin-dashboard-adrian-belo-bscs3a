@@ -71,5 +71,12 @@
 }
 .navnav{
    display:flex;
-
+}
+.userProf{
+  position:absolute;
+  right:0;
+}
+.userProf a{
+  display: flex;
+  align-items: center;
 }

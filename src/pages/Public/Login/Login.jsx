@@ -40,30 +40,39 @@ function Login() {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (role) => {
     const data = { email, password };
     setStatus('loading');
     console.log(data);
+    const endpoint = role === 'admin' ? '/admin/login' : '/user/login';
 
     await axios({
       method: 'post',
-      url: '/admin/login',
+      url: endpoint,
       data,
       headers: { 'Access-Control-Allow-Origin': '*' },
     })
       .then((res) => {
         console.log(res);
         localStorage.setItem('accessToken', res.data.access_token);
-        localStorage.setItem('email', email);
-
-
-        navigate('/main/movies');
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         setStatus('idle');
+        setTimeout(() => {
+          if (res.data.user.role === 'admin') {
+            navigate('/main/home1');
+          } else {
+            navigate('/')
+          }
+          setStatus('idle');
+        }, 3000);
       })
       .catch((e) => {
         console.log(e);
-        setStatus('idle');
-        alert(e.response.data.message);
+        setTimeout(() => {
+          setStatus('idle');
+          alert(e.response.data.message);
+
+        }, 3000);
       });
   };
 

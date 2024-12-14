@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './Main2.css';
 
@@ -6,10 +6,24 @@ function Main() {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('email');
-    localStorage.removeItem('accessToken');
-    navigate('/');
+    const confirmation = window.confirm("Are you sure you want to log out?");
+    if (confirmation) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      navigate('/');
+    }
   };
+  
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setUsername(user.firstName);
+    }
+  }, []);
+  
 
   useEffect(() => {
     if (
@@ -43,12 +57,14 @@ function Main() {
                   />
               </a>
             </li>
-            <li>
+            <li className='userProf'>
               <a href='/main/users'>
               <img
                     src="https://img.icons8.com/?size=30&id=ABBSjQJK83zf&format=png&color=FAFAFA"
                     alt="User"
                   />
+                <span>{username}</span>
+
               </a>
             </li>
             <li>

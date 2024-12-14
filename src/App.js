@@ -28,6 +28,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: '/users',
+        element: <Users />,
+      },
+      {
         path: "/view/:movieId?",
         element: <View />,
       },

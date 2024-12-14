@@ -546,8 +546,7 @@ const handleSave = async () => {
           </div>
         </form>
 
-        <div className="loadingstate">{loading && <p>Loading, please wait...</p>}  // Show loading indicator if loading is true
-        </div>
+        
 
         {state.loading && <p>Loading...</p>}
         {state.error && <p>Error: {state.error}</p>}

@@ -7,36 +7,41 @@ import axios from 'axios';
 function MainClient() {
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setUsername(user.firstName);
+    }
+  }, []);
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    const confirmation = window.confirm("Are you sure you want to log out?");
+    if (confirmation) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      navigate('/');
+    }
   };
+  
+  
+    useEffect(() => {
+      if (
+        accessToken === undefined ||
+        accessToken === '' ||
+        accessToken === null
+      ) {
+        handleLogout();
+      }
+    }, []);
 
   const handleGoToLoginClick = () => {
     alert('Go to Login page');
     navigate('/login'); // Navigate to the login page
   };
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  
-    if (e.target.value.trim()) {
-      axios
-        .get(`/movies/search?q=${e.target.value}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        })
-        .then((response) => {
-          setSearchResults(response.data.movies);
-        })
-        .catch((err) => {
-          console.error('Error fetching search results:', err);
-          setSearchResults([]); 
-        });
-    } else {
-      setSearchResults([]);
-    }
-  };
+
 
   
   useEffect(() => {
@@ -73,6 +78,7 @@ function MainClient() {
               </a>
             </li> */}
             {accessToken ? (
+              <>
               <li className='logout'>
                 <a onClick={handleLogout}>
                 <img
@@ -81,12 +87,24 @@ function MainClient() {
                   />
                 </a>
               </li>
-              
+              <li className='userProf'>
+              <a href='/users'>
+              <img
+                    src="https://img.icons8.com/?size=30&id=ABBSjQJK83zf&format=png&color=FAFAFA"
+                    alt="User"
+                  />
+                   <span>{username}</span>
+
+              </a>
+             </li>
+             </>
             ) : (
               <li className='login'>
                 <a onClick={handleGoToLoginClick}>SignIn</a>
               </li>
+              
             )}
+            
             
           </ul>
         </div>
