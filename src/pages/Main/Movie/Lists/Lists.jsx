@@ -57,7 +57,7 @@ const Lists = () => {
             navigate('/main/movies/form');
           }}
         >
-          ADD          <img src='https://img.icons8.com/?size=25&id=sE8CuzuVQX3D&format=png&color=000000'alt='ADD'/>
+          ADD          <img src='https://img.icons8.com/?size=25&id=sE8CuzuVQX3D&format=png&color=fafafa'alt='ADD'/>
         </button>
       </div>
       <div className='table-container'>

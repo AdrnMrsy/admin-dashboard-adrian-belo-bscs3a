@@ -80,7 +80,33 @@ function View() {
         
           {/* <MovieVideos movieId={movie.tmdbId} /> */}
           {/* <MoviePhotos movieId={movie.tmdbId} /> */}
-          <MovieCast movieId={movie.tmdbId} />
+          <h2 className="h2ph">Cast</h2>
+<div className="viewcast">
+  {movie.casts && movie.casts.length > 0 ? (
+    <div className="vcast">
+      <div>
+        <div className="cast-preview">
+          {movie.casts.map((cast, index) => (
+            <div key={index} className="cast-item">
+              <img
+                className="cast-photo"
+                src={cast.url}
+                alt={cast.name}
+                width="auto"
+                height="250"
+              />
+              <p className="actor-name">{cast.name}</p>
+              <p className="character-name">{cast.character}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <p>No cast information available.</p> // Display message if no cast data
+  )}
+</div>
+
 
           <h2 className="h2ph">Photos</h2>
           <div className="viewphoto">
@@ -113,18 +139,18 @@ function View() {
              <div className="vvideos">
                 {movie.videos.map((video, index) => (
                   <div key={index} className="video-preview">
-                    <div>
+                    
                     <iframe
-                      width="560"
-                      height="315"
+                      width="auto"
+                      height="560"
                       src={`https://www.youtube.com/embed/${video.videoKey}`}
                       title={video.name || `Video ${index + 1}`}
-                      frameBorder="1"
+                      frameBorder="0"
                       
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>
-                  </div>
+               
                   </div>
 
                 ))}

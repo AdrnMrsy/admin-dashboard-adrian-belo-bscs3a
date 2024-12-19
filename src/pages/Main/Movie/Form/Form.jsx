@@ -3,6 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import "./Form.css";
 import React, { useReducer } from "react";
+import { useMovieContext } from "../../../../context/MovieContext";
+
 const initialState = { 
   videos: [], 
   casts: [], 
@@ -36,7 +38,7 @@ const Form = () => {
   const [movie, setMovie] = useState(undefined);
   const navigate = useNavigate();
   let { movieId } = useParams();
-  const [selectedVideo, setSelectedVideo] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState([]); // to be used when i change the adding of video,photos,casts
   const [selectedPhotos, setSelectedPhotos] = useState([]);
   const [selectedCasts, setSelectedCasts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); 
@@ -44,7 +46,41 @@ const Form = () => {
   const [isMovieListVisible, setIsMovieListVisible] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
+  const [lists, setLists] = useState([]);
+  //select vid,cast,photo
+  const handleToggleSelectVideo = (video) => {
+    setSelectedVideo((prev) =>
+      prev.some((v) => v.id === video.id)
+        ? prev.filter((v) => v.id !== video.id)
+        : [...prev, video]
+    );
+  };
 
+  const handleToggleSelectPhoto = (photo) => {
+    setSelectedPhotos((prev) =>
+      prev.some((p) => p.file_path === photo.file_path)
+        ? prev.filter((p) => p.file_path !== photo.file_path)
+        : [...prev, photo]
+    );
+  };
+
+  const handleToggleSelectCast = (actor) => {
+    setSelectedCasts((prev) =>
+      prev.some((a) => a.id === actor.id)
+        ? prev.filter((a) => a.id !== actor.id)
+        : [...prev, actor]
+    );
+  };
+  //GET MOVIE TO CHECK MOVIE EXIST
+
+  const getMovies = () => {
+    axios.get('/movies').then((response) => {
+      setLists(response.data);
+    });
+  };
+  useEffect(() => {
+    getMovies();
+  }, []);
 
 //FETCHER
 const fetchVideos = async (tmdbId) => {
@@ -106,12 +142,12 @@ const fetchPhotos = async (tmdbId) => {
     console.error(error);
   }
 };
-useEffect(() => {
-  // Update selected state or clear it when state is empty or null
-  setSelectedPhotos(state.photos && state.photos.length > 0 ? state.photos : []);
-  setSelectedVideo(state.videos && state.videos.length > 0 ? state.videos : []);
-  setSelectedCasts(state.casts && state.casts.length > 0 ? state.casts : []);
-}, [state.photos, state.videos, state.casts]);
+// useEffect(() => {
+//   // Update selected state or clear it when state is empty or null
+//   setSelectedPhotos(state.photos && state.photos.length > 0 ? state.photos : []);
+//   setSelectedVideo(state.videos && state.videos.length > 0 ? state.videos : []);
+//   setSelectedCasts(state.casts && state.casts.length > 0 ? state.casts : []);
+// }, [state.photos, state.videos, state.casts]);
 
 //SEARCH
   const handlePrevPage = () => {
@@ -189,35 +225,31 @@ useEffect(() => {
 //CAST FUNCTIONS
 const handleAddCasts = async (movieId, actor) => {
   const accessToken = localStorage.getItem("accessToken");
-  const userId=1;
-  // Prepare cast data for a single actor
   const castData = {
-    userId: userId,
     movieId: movieId,
-    name: actor.name, // Cast name
-    url: actor.photo || "https://via.placeholder.com/150x150?text=No+Photo+Available", // Default placeholder if no photo
-    characterName: actor.character, // Character played by the cast
+    name: actor.name,
+    url: `https://image.tmdb.org/t/p/w500/${actor.profile_path}`, 
+    characterName: actor.character, 
   };
  console.log(castData)
   try {
     const response = await axios({
       method: "post",
-      url: "/casts", // Ensure this is the correct endpoint for adding casts
-      data: castData, // Send cast data
+      url: "/admin/casts", 
+      data: castData, 
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
+        Accept: 'application/json',
 
       },
     });
 
     console.log("Cast added successfully:", response.data);
-   alert("Cast added successfully!");
-    return true; // Indicate success
+  //  alert("Cast added successfully!");
+    return true; 
   } catch (error) {
     console.error("Error adding cast:", error);
-    alert("Failed to add cast. Please try again.");
-    return false; // Indicate failure
+    return false;
   }
 };
 //PHOTOS FUNCTIONS  
@@ -227,14 +259,14 @@ const handleAddPhotos = async (movieId, photo) => {
     movieId: movieId,
     url: photo?.file_path
       ? `https://image.tmdb.org/t/p/w500${photo.file_path}`
-      : "https://via.placeholder.com/500x750?text=No+Photo+Available", // Default placeholder if no photo
-    description: photo?.file_path ? "Movie Poster" : "No photo available", // Set a name for the photo
+      : "https://via.placeholder.com/500x750?text=No+Photo+Available", 
+    description: photo?.file_path ? "Movie Poster" : "No photo available", 
   };
 
   try {
     const response = await axios({
       method: "post",
-      url: "/photos", // Ensure this is the correct endpoint for adding photos
+      url: "/photos", 
       data: photoData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -254,14 +286,17 @@ const handleAddPhotos = async (movieId, photo) => {
 //MOVIES and FETCH Videos,Photos,Casts
   const handleSelectMovie = (movie) => {
     setSelectedMovie(movie);
-    fetchVideos(movie.id); // Fetch videos for the selected movie
-    fetchPhotos(movie.id); // Fetch videos for the selected movie
-    fetchCast(movie.id); // Fetch videos for the selected movie
+    fetchVideos(movie.id); 
+    fetchPhotos(movie.id); 
+    fetchCast(movie.id); 
   };
-
+  const { movieList } = useMovieContext(); // Access the movieList from context
+  
 //SAVE to DB
 const handleSave = async () => {
-  // Check for missing required data
+  
+  console.log(movieList);
+  console.log(selectedMovie.id);
   setLoading(true);
 
   const missingData = [];
@@ -269,20 +304,17 @@ const handleSave = async () => {
   if (!state.photos || state.photos.length <= 0) missingData.push("photos");
   if (!state.casts || state.casts.length <= 0) missingData.push("casts");
 
-  // If any data is missing, alert and proceed
   if (missingData.length > 0) {
     alert(`No ${missingData.join(", ")} found. Proceeding with empty data.`);
   }
 
   const accessToken = localStorage.getItem("accessToken");
 
-  // Ensure a movie is selected
   if (!selectedMovie) {
     alert("Please search and select a movie.");
     return;
   }
 
-  // Prepare movie data for the API request
   const data = {
     tmdbId: selectedMovie.id,
     title: selectedMovie.original_title,
@@ -296,7 +328,6 @@ const handleSave = async () => {
   };
 
   try {
-    // Make the API request to save the movie
     const response = await axios({
       method: movieId ? "patch" : "post",
       url: movieId ? `/movies/${movieId}` : "/movies",
@@ -305,42 +336,46 @@ const handleSave = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    if (!movieId) {
+      const movieExists = lists.some(movie => movie.tmdbId === selectedMovie.id);
+      if (movieExists) {
+        alert("This movie already exists in the database.");
+        return;
+      }
+    }
 
-    // Get the movie ID, either from existing state or the response
     const newMovieId = movieId || response.data.id;
 
     console.log("Movie saved successfully:", response.data);
 
-    // Function to handle adding videos, photos, and casts
-    const addItems = async (items, handler, type) => {
-      if (items && items.length > 0) {
-        const addPromises = items.map(item => handler(newMovieId, item)); // Add items concurrently
-        const results = await Promise.all(addPromises);
-        if (results.includes(false)) {
-          alert(`One or more ${type} could not be added. Please try again.`);
-          return false;
+    if (!movieId) {
+      const addItems = async (items, handler, type) => {
+        if (items && items.length > 0) {
+          const addPromises = items.map(item => handler(newMovieId, item));
+          const results = await Promise.all(addPromises);
+          if (results.includes(false)) {
+            alert(`One or more ${type} could not be added. Please try again.`);
+            return false;
+          }
         }
-      }
-      return true;
-    };
+        return true;
+      };
 
-    // Add videos, photos, and casts (if available)
-    if (!(await addItems(selectedVideo, handleAddVideo, "videos"))) return;
-    if (!(await addItems(selectedPhotos, handleAddPhotos, "photos"))) return;
-    // Uncomment if cast handling is necessary
-    // if (!(await addItems(selectedCasts, handleAddCasts, "casts"))) return;
+      if (!(await addItems(selectedVideo, handleAddVideo, "videos"))) return;
+      if (!(await addItems(selectedPhotos, handleAddPhotos, "photos"))) return;
+      if (!(await addItems(selectedCasts, handleAddCasts, "casts"))) return;
+    }
+
     setLoading(false);
-
     alert("Movie saved successfully!");
-    // Navigate to the movie details page
     navigate(`/main/movies`);
   } catch (error) {
     console.error("Error saving movie:", error);
     setLoading(false);
-
     alert("Failed to save the movie. Please try again.");
   }
 };
+
 
   useEffect(() => {
     if (movieId) {
@@ -399,7 +434,7 @@ const handleSave = async () => {
                 </button>
               </div>
 
-              {/* Toggle button to show/hide movie list */}
+              {/* button to show/hide movie list */}
               {isMovieListVisible && (
                 <button type="button" className="btn-toggle" onClick={handleToggleMovieList}>
                   {isMovieListVisible ? 'Hide' : 'Show Movie List'}
@@ -552,7 +587,7 @@ const handleSave = async () => {
         {state.error && <p>Error: {state.error}</p>}
        {/* Conditionally show Videos, Cast, and Photos only when creating a movie */}
     {!movieId && (
-      <>
+      <div>
         <h2>Videos</h2>
         <div className="videosMainCont">
           {state.videos && state.videos.length > 0 ? (
@@ -572,6 +607,11 @@ const handleSave = async () => {
                     ></iframe>
                   </div>
                 </div>
+                <button onClick={() => handleToggleSelectVideo(video)}>
+                {selectedVideo.some((v) => v.id === video.id)
+                  ? 'Unselect'
+                  : 'Select'}
+              </button>
               </div>
             ))
           ) : (
@@ -583,7 +623,7 @@ const handleSave = async () => {
         <div className="casts-container">
           {state.casts.length > 0 ? (
             state.casts.map((actor) => (
-              <div key={actor.id} className="cast-item">
+              <div key={actor.id} className="cast-items">
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
                   alt={actor.name}
@@ -591,6 +631,11 @@ const handleSave = async () => {
                 />
                 <p>{actor.name}</p>
                 <p>{actor.character}</p>
+                <button onClick={() => handleToggleSelectCast(actor)}>
+                {selectedCasts.some((a) => a.id === actor.id)
+                  ? 'Unselect'
+                  : 'Select'}
+              </button>
               </div>
             ))
           ) : (
@@ -602,18 +647,37 @@ const handleSave = async () => {
         <div className="photos-container">
           {state.photos.length > 0 ? (
             state.photos.map((photo) => (
+              <div className="photo-items">
               <img
                 key={photo.file_path}
                 src={`https://image.tmdb.org/t/p/w500/${photo.file_path}`}
                 alt="Movie photo"
                 className="movie-photo"
               />
+              <button onClick={() => handleToggleSelectPhoto(photo)}>
+                {selectedPhotos.some((p) => p.file_path === photo.file_path)
+                  ? 'Unselect'
+                  : 'Select'}
+              </button>
+              </div>
             ))
+            
           ) : (
             <p>No photos available</p>
           )}
         </div>
-      </>
+        <div className="selected-items">
+        <h3>Selected Items:</h3>
+        <h4>Videos</h4>
+        <pre>{JSON.stringify(selectedVideo, null, 2)}</pre>
+
+        <h4>Photos</h4>
+        <pre>{JSON.stringify(selectedPhotos, null, 2)}</pre>
+
+        <h4>Casts</h4>
+        <pre>{JSON.stringify(selectedCasts, null, 2)}</pre>
+      </div>
+      </div>
     )}
       </div>
 

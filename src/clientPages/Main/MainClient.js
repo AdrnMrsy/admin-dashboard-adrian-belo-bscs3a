@@ -26,15 +26,7 @@ function MainClient() {
   };
   
   
-    useEffect(() => {
-      if (
-        accessToken === undefined ||
-        accessToken === '' ||
-        accessToken === null
-      ) {
-        handleLogout();
-      }
-    }, []);
+   
 
   const handleGoToLoginClick = () => {
     alert('Go to Login page');
@@ -50,7 +42,9 @@ function MainClient() {
       accessToken === '' ||
       accessToken === null
     ) {
-      handleLogout();
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      navigate('/');
     }
   }, []);
   return (

@@ -57,17 +57,39 @@ height: 100%;
   .viewvid{
     margin-left: 70px;
     margin-right: 70px;
-    height: 90vh;
-    width:auto;
-  }
+    overflow-x: auto; 
+    white-space: nowrap; 
+    padding: 10px;  }
   .video-preview{
-    margin-bottom: 70px;
+    margin: 10px;
   }
-.vvideos{
+  .vvideos{
+    display: flex;
+    height:300px;
+    }
+.vcast{
   display: flex;
   flex-wrap: wrap;
 justify-content: space-between;
 }
+.viewcast{
+  margin-left: 70px;
+    margin-right: 70px;
+    overflow-x: auto;
+scrollbar-width: none;
+}
+.cast-photo{
+  width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: rgba(180, 180, 180, 0.24) 0px 3px 8px; 
+}
+.cast-preview{
+  display:flex;
+  gap:10px;
+}
+
   .viewphoto{ 
     margin-left: 70px;
     margin-right: 70px;

@@ -56,7 +56,6 @@ function Login() {
         console.log(res);
         localStorage.setItem('accessToken', res.data.access_token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
-        setStatus('idle');
         setTimeout(() => {
           if (res.data.user.role === 'admin') {
             navigate('/main/home1');
@@ -64,7 +63,7 @@ function Login() {
             navigate('/')
           }
           setStatus('idle');
-        }, 3000);
+        }, 2000);
       })
       .catch((e) => {
         console.log(e);
@@ -72,7 +71,7 @@ function Login() {
           setStatus('idle');
           alert(e.response.data.message);
 
-        }, 3000);
+        }, 2000);
       });
   };
 
