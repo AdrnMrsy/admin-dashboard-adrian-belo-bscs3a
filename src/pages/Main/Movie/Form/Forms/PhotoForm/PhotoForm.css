@@ -1,0 +1,36 @@
+.photoss-container {
+    padding: 20px;
+  }
+  
+  .photoss-container > div {
+    display: flex; 
+    overflow-x: auto; 
+    gap: 10px; 
+  }
+  
+  .photoss-preview {
+    flex: 0 0 auto; 
+    text-align: center; 
+  }
+  
+  .photoss-preview img {
+    border-radius: 10px; 
+    width: 100%; 
+    max-width: 300px; 
+    height: auto; 
+  }
+  
+  .deletess-button {
+    margin-top: 0px;
+    padding: 5px 10px;
+    color: white;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .deletess-button:hover {
+    background-color: darkred;
+  }
+  

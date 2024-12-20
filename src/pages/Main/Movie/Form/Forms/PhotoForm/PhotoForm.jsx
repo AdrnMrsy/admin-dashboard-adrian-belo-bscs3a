@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useMovieContext } from "../../../../../../context/MovieContext";
+import './PhotoForm.css'
 
 const Photos = () => {
   const { movie, setMovie } = useMovieContext();
@@ -51,33 +52,32 @@ const Photos = () => {
   };
 
   return (
-    <div className="photos-container">
-      <h1>Movie Photos</h1>
-      {movie?.photos?.length > 0 ? (
-        <div>
-          {movie.photos.map((photo, index) => (
-            <div key={photo.id} className="photo-preview">
-              <img
-                src={photo.url} // Assume each photo has a URL field
-                alt={photo.name || `Photo ${index + 1}`}
-                width="300" // Adjust the size as necessary
-                height="auto"
-              />
-              <p>{photo.name}</p>
-              <button
-                onClick={() => handleDeletePhoto(photo.id)}
-                className="delete-button"
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No photos available for this movie.</p>
-      )}
-    </div>
-  );
+  <div className="photoss-container">
+    <h1>Movie Photos</h1>
+    {movie?.photos?.length > 0 ? (
+      <div>
+        {movie.photos.map((photo, index) => (
+          <div key={photo.id} className="photoss-preview">
+            <img
+              src={photo.url} 
+              alt={photo.name || `Photo ${index + 1}`}
+            />
+            <p>{photo.name}</p>
+            <button
+              onClick={() => handleDeletePhoto(photo.id)}
+              className="deletess-button"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p>No photos available for this movie.</p>
+    )}
+  </div>
+);
+
 };
 
 export default Photos;

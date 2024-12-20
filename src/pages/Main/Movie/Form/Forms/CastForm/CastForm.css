@@ -1,0 +1,24 @@
+.castss-container {
+    padding: 20px;
+  }
+  
+  .castss-container > div {
+    display: flex; 
+    overflow-x: auto; 
+    gap: 15px; 
+  }
+  
+  .castss-preview {
+    flex: 0 0 auto; 
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #1d1c1c; 
+    min-width: 200px; 
+  }
+  
+  .castss-preview p {
+    margin: 0 0 10px;
+  }
+
+  

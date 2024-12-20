@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useMovieContext } from "../../../../../../context/MovieContext";
+import './VideoForm.css'
 
 const Videos = () => {
   const { movie, setMovie } = useMovieContext();
@@ -27,11 +28,10 @@ const Videos = () => {
     if (window.confirm("Are you sure you want to delete this video?")) {
       console.log("Deleting video with id:", videoId); // Log to check
   
-      // Get the auth token from localStorage or context (wherever it's stored)
       const accessToken = localStorage.getItem("accessToken");
   
       axios
-        .delete(`/movies/${movieId}/videos/${videoId}`, {
+        .delete(`/videos/${videoId}`, {
           headers: {
             'Authorization': `Bearer ${accessToken}` // Add Bearer token here
           }
@@ -53,37 +53,37 @@ const Videos = () => {
   
 
   return (
-    <div className="videos-container">
+    <div className="videoss-container">
       <h1>Movie Videos</h1>
       {movie?.videos?.length > 0 ? (
         <div>
           {movie.videos.map((video, index) => (
-            <div key={video.id} className="video-preview"> {/* Use video.id as key */}
-                <iframe
-                width="560"
-                height="315"
+            <div key={video.id} className="videoss-preview">
+              <iframe
+                width="540"
+                height="300"
                 src={`https://www.youtube.com/embed/${video.videoKey}`}
                 title={video.name || `Video ${index + 1}`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                ></iframe>
-                <p>{video.name}</p>
-                <button
-                onClick={() => handleDeleteVideo(video.id)}  
-                className="delete-button"
-                >
+              ></iframe>
+              <p>{video.name}</p>
+              <button
+                onClick={() => handleDeleteVideo(video.id)}
+                className="deletess-button"
+              >
                 Delete
-                </button>
+              </button>
             </div>
-            ))}
-
+          ))}
         </div>
       ) : (
         <p>No videos available for this movie.</p>
       )}
     </div>
   );
+  
 };
 
 export default Videos;

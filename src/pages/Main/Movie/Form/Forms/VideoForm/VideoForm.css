@@ -1,0 +1,16 @@
+.videoss-container {
+    padding: 20px;
+  }
+  
+  .videoss-container > div {
+    display: flex; 
+    overflow-x: auto; 
+    gap: 10px; 
+  }
+  
+  .videoss-preview {
+    flex: 0 0 auto; 
+    text-align: center; 
+  }
+  
+ 
